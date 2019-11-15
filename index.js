@@ -35,6 +35,8 @@ var time = ''
 var execSync = require('child_process').execSync
 var loc = execSync('cat /home/pi/weather/loc').toString()
 //'http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=1159068000'
+var addr = ''
+
 
 server.listen(port, function(){
 	console.log('server is running')
@@ -46,7 +48,7 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
 	console.log('connection')
-	io.emit('info', {'temp':temp, 'wf':wf, 'loc':loc, 'time':time})
+	io.emit('info', {'temp':temp, 'wf':wf, 'loc':addr, 'time':time})
 	
 	socket.on('update', function(data){
 		console.log('update:', data)
@@ -76,14 +78,14 @@ var checkWeather = function(loc){
 		  temp = parseInt(data[0]['rss:description'].body.data[0].temp['#'])
 		  wf = data[0]['rss:description'].body.data[0].wfen['#']
       time = new Date().toLocaleString()
+			addr = data[0]['categories'][0]
 		  console.log(temp + '' + wf)
-	    io.emit('info', {'temp':temp, 'wf':wf, 'loc':loc, 'time':time})
+	    io.emit('info', {'temp':temp, 'wf':wf, 'loc':addr, 'time':time})
 
 		  updateWeather()
 	  })
 	}
 	catch(err){
-	  io.emit('info', {'temp':temp, 'wf':wf, 'loc':'Location error', 'time':time})
 	}
 }
 
