@@ -11,7 +11,7 @@
 					$('#temp').text(data.temp)	
 					$('#wf').text(data.wf)	
 					$('#record').text(data.loc)
-				  $('#time').text(new Date())	
+				  $('#time').text(data.time)	
 				})
 			  $('#update').click(function(){
 			  	socket.emit('update', $('#loc_input').val())
@@ -24,9 +24,9 @@
 		Temperature: <b><span id='temp'></span> ºC</b></br>
 		Sky status: <b><span id='wf'></span></b><br><br>
 		
-		Location: <input type='text' id='loc_input' />
+		Change location: <input type='text' id='loc_input' />
 		<button id='update'>update</button><br>
-		Current location: <i><span id='record'></span></i><br>
+		Location: <i><span id='record'></span></i><br>
 		Updated time: <i><span id ='time'></span></i><br><br>
 		RSS info: <i>http://www.weather.go.kr/weather/lifenindustry/sevice_rss.jsp</i>
 	</body>

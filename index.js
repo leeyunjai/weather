@@ -30,6 +30,7 @@ var opts = {
 var oled = new Oled(opts)
 var temp = 0
 var wf = 'Clear'
+var time = ''
 
 var execSync = require('child_process').execSync
 var loc = execSync('cat /home/pi/weather/loc').toString()
@@ -45,7 +46,7 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
 	console.log('connection')
-	io.emit('info', {'temp':temp, 'wf':wf, 'loc':loc})
+	io.emit('info', {'temp':temp, 'wf':wf, 'loc':loc, 'time':time})
 	
 	socket.on('update', function(data){
 		console.log('update:', data)
@@ -73,9 +74,9 @@ var checkWeather = function(loc){
 
 		temp = parseInt(data[0]['rss:description'].body.data[0].temp['#'])
 		wf = data[0]['rss:description'].body.data[0].wfen['#']
-
+    time = new Date().toLocaleString()
 		console.log(temp + '' + wf)
-	  io.emit('info', {'temp':temp, 'wf':wf, 'loc':loc})
+	  io.emit('info', {'temp':temp, 'wf':wf, 'loc':loc, 'time':time})
 
 		updateWeather()
 	})
