@@ -55,7 +55,7 @@ io.on('connection', function(socket){
 
 		execSync('echo "'+ data.toString() +'" > /home/pi/weather/loc')
 		loc = data.toString()
-		checkWeather(loc)
+		checkWeather()
 	})
 })
 
@@ -70,7 +70,7 @@ var updateIcon = function(wf){
 		return '/home/pi/weather/icon/rain.png'
 }
 
-var checkWeather = function(loc){
+var checkWeather = function(){
   try{
 	  rsj.r2j(loc, function(json){
 		  var data = JSON.parse(json)
@@ -124,7 +124,7 @@ var updateWeather = function(){
 oled.begin(function(){
 	oled.clearDisplay()
 
-	checkWeather(loc)
+	checkWeather()
 
 	setInterval(function(){
 		var date = new Date()
@@ -133,7 +133,7 @@ oled.begin(function(){
 			console.log('check date : ' + date)
 
 			oled.clearDisplay()
-			checkWeather(loc)
+			checkWeather()
 		}
 	}, 1000)
 })
