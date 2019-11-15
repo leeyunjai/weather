@@ -121,7 +121,7 @@ oled.begin(function(){
 	setInterval(function(){
 		var date = new Date()
 
-		if((date.getHours()%3 == 0) && (date.getMinutes() == 0) && (date.getSeconds() == 0)){
+		if((date.getMinutes() == 0) && (date.getSeconds() == 0)){
 			console.log('check date : ' + date)
 
 			oled.clearDisplay()
