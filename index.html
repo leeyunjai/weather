@@ -1,0 +1,33 @@
+<html>
+	<head>
+		<script src='/socket.io/socket.io.js'></script>
+		<script src='https://code.jquery.com/jquery-3.1.1.min.js'></script>
+		<script>
+			$(function(){
+				var socket = io()
+
+				socket.on('info', function(data){
+					console.log(data)
+					$('#temp').text(data.temp)	
+					$('#wf').text(data.wf)	
+					$('#record').text(data.loc)
+				  $('#time').text(new Date())	
+				})
+			  $('#update').click(function(){
+			  	socket.emit('update', $('#loc_input').val())
+			  })
+			})
+		</script>
+	</head>
+	<body>
+		<h3>Today's weather information is.... </h3></br>
+		Temperature: <b><span id='temp'></span> ºC</b></br>
+		Sky status: <b><span id='wf'></span></b><br><br>
+		
+		Location: <input type='text' id='loc_input' />
+		<button id='update'>update</button><br>
+		Current location: <i><span id='record'></span></i><br>
+		Updated time: <i><span id ='time'></span></i><br><br>
+		RSS info: <i>http://www.weather.go.kr/weather/lifenindustry/sevice_rss.jsp</i>
+	</body>
+</html>
