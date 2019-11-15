@@ -69,17 +69,22 @@ var updateIcon = function(wf){
 }
 
 var checkWeather = function(loc){
-	rsj.r2j(loc, function(json){
-		var data = JSON.parse(json)
+  try{
+	  rsj.r2j(loc, function(json){
+		  var data = JSON.parse(json)
 
-		temp = parseInt(data[0]['rss:description'].body.data[0].temp['#'])
-		wf = data[0]['rss:description'].body.data[0].wfen['#']
-    time = new Date().toLocaleString()
-		console.log(temp + '' + wf)
-	  io.emit('info', {'temp':temp, 'wf':wf, 'loc':loc, 'time':time})
+		  temp = parseInt(data[0]['rss:description'].body.data[0].temp['#'])
+		  wf = data[0]['rss:description'].body.data[0].wfen['#']
+      time = new Date().toLocaleString()
+		  console.log(temp + '' + wf)
+	    io.emit('info', {'temp':temp, 'wf':wf, 'loc':loc, 'time':time})
 
-		updateWeather()
-	})
+		  updateWeather()
+	  })
+	}
+	catch(err){
+	  io.emit('info', {'temp':temp, 'wf':wf, 'loc':'Location err', 'time':time})
+	}
 }
 
 var updateWeather = function(){
