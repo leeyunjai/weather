@@ -83,7 +83,7 @@ var checkWeather = function(loc){
 	  })
 	}
 	catch(err){
-	  io.emit('info', {'temp':temp, 'wf':wf, 'loc':'Location err', 'time':time})
+	  io.emit('info', {'temp':temp, 'wf':wf, 'loc':'Location error', 'time':time})
 	}
 }
 
